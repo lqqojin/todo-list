@@ -1,12 +1,15 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const app = express();
-const port = process.env.PORT || 5000;
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.get('/', (req, res) => {
-	res.send({ message: 'Hello Express!' });
+/**
+ * start server
+ */
+const path = require('path');
+const dotenv = require('dotenv');
+const env = process.env.NODE_ENV || 'local';
+dotenv.config({ silent: true, path: path.resolve(__dirname, '.env') });
+console.log(`=======================> start ${env} mode`);
+require('./connMongo');
+require('./src/app');
+process.on('uncaughtException', (err) => {
+	console.log('================== uncauchtgException ocurred ==================');
+	console.error(err);
+	console.log('================================================================');
 });
-
-app.listen(port, () => console.log(`Listening on port ${port}\n http://localhost:${port}/`));
