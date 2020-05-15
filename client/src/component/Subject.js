@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import logo from '../../download.svg'
+import React from 'react';
+import logo from '../download.svg'
+
 function Subject (props) {
 	return(
 		<header>

@@ -9,6 +9,7 @@
     background: #fff;
     margin-top: 5%;
     padding: 10px;
+    height: 50%;
 }
 
 .App-logo {
@@ -30,4 +31,42 @@
     to {
         transform: rotate(360deg);
     }
+}
+
+.doList {
+    padding: 0;
+    margin: 0;
+    clear: both;
+}
+.doList li {
+    list-style: none;
+    border-bottom: 2px solid #d9d9d9;
+    width: 100%;
+}
+.doList li::after {
+    clear: both;
+    content: '.';
+    display: block;
+    height: 0;
+    line-height: 0;
+    overflow: hidden;
+}
+.doList em {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    float: left;
+    margin-top: 5px;
+    border: solid 1px #d9d9d9
+}
+.doList li p {
+    float: left;
+    width: 84%;
+    padding-left: 2%;
+    margin: 0;
+}
+.doList li span {
+    float: left;
+    display: inline-block;
 }
