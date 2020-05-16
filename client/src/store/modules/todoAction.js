@@ -3,64 +3,87 @@ Ducks 패턴 사용
 액션 파일과 리듀서를 위한 파일을 같이 작성합니다.
  */
 // 액션 타입 정의
-const GET_LIST = 'todo/GET_LIST';
-const CHANGE_LIST = 'todo/CHANGE_LIST';
+import axios from "axios";
+
+const GET = 'todo/GET';
 const CREATE = 'todo/CREATE';
 const UPDATE = 'todo/UPDATE';
-const DEL = 'todo/DEL';
-
-
-// **** 액션 생섬함수 정의
-export const getList = todo => ({ type: GET_LIST });
-export const changeList = todo => ({ type: CHANGE_LIST });
+const REMOVE = 'todo/REMOVE';
+// 액션 생섬함수 정의
+export const get = (data) => ({type: GET, data});
 export const create = (todo) => ({ type: CREATE, todo });
-export const update = () => ({ type: UPDATE });
-export const del = () => ({ type: DEL });
+export const update = (id, status) => ({ type: UPDATE, id, status });
+export const remove = (id) => ({ type: REMOVE, id });
 
-// **** 초기상태 정의
+// **** 초기상태 정의ß
 /**
     status active, complete,
  */
 const initialState = {
-	max_id: 1,
+	max_id: null,
 	selected_id: null,
-	contents: [
-		{ id: 1, desc: 'study', status: 'active'},
-	],
+	contents: [],
+	init: true,
 };
-
 // 리듀서
 export default function todoAction(state = initialState, action) {
+
 	let newState;
+	let newContents = [];
+	if (state.init) {
+
+	}
+	console.log('todoAction', { state, action });
 	switch (action.type) {
-		case GET_LIST:
+		case GET:
+			console.log(`%cGET`, 'color:red');
+			newContents = action.data.concat();
+			console.log(newContents);
+			newState = Object.assign({}, state, {
+				contents: newContents
+			})
+			console.log(action.type, action, state, newState);
 			return {
-				...state,
-			};
-		case CHANGE_LIST:
-			return {
-				...state,
+				...newState
 			}
 		case CREATE:
 			console.log(`%cCREATE`, 'color:red');
-			let newTodoList = [];
-			let newMaxId = state.max_id + 1
-			newTodoList = state.contents.concat(Object.assign({ id: newMaxId }, action.todo));
+			let newMaxId = state.max_id + 1;
+			newContents = state.contents.concat(Object.assign({ id: newMaxId }, action.todo));
 			newState = Object.assign({}, state, {
 				max_id: newMaxId,
-				contents: newTodoList
+				contents: newContents
 			});
+
 			console.log(action.type, action, state, newState);
 			return {
 				...newState,
 			};
 		case UPDATE:
+			console.log(`%cUPDATE`, 'color:red');
+			newContents = state.contents.concat();
+			newContents.map( (item) => {
+				if (item.id === action.id) item.status = action.status;
+			});
+			newState = Object.assign({}, state, {
+				contents: newContents
+			});
+			console.log(action.type, action, state, newState);
 			return {
-				...state,
+				...newState,
 			};
-		case DEL:
+		case REMOVE:
+			console.log(`%cREMOVE`, 'color:red');
+			console.log(action);
+			state.contents.map( (item) =>{
+				if (item.id !== action.id) newContents.push(item);
+			});
+			newState = Object.assign({}, state, {
+				contents: newContents
+			});
+			console.log(action.type, action, state, newState);
 			return {
-				...state,
+				...newState,
 			};
 		default:
 			return state;

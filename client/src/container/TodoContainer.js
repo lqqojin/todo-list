@@ -1,14 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 import TodoList from '../component/TodoList';
-import { getList } from '../store/modules/todoAction';
+import { get, create, remove, update } from '../store/modules/todoAction';
 
 function TodoContainer (props) {
-	const { contents } = props;
+	const { contents, remove, update } = props;
 	console.log('contents >', contents);
-	const handlerDelete = (id)=> {
-		console.log(id);
-	}
+	const handlerDelete = (id) => remove(id);
+	const handlerUpdate = (id, status) => update(id, status)
 	return (
 		<ul className="doList">
 			{
@@ -17,8 +16,8 @@ function TodoContainer (props) {
 						<TodoList
 							key={todo.id}
 							{...todo}
-							// onClick={() => onTodoClick(todo.id)}
-							onDelete={handlerDelete(todo.id)}
+							onUpdate={handlerUpdate}
+							onDelete={handlerDelete}
 						/>
 					);
 				})
@@ -34,7 +33,10 @@ const mapStateToProps = state => ({
 
 // props 로 넣어줄 액션 생성함수
 const mapDispatchToProps = dispatch => ({
-	getList: todo => dispatch(getList(todo)),
+	get: () => dispatch(get()),
+	create: (todo) => dispatch(create(todo)),
+	remove: (id) => dispatch(remove(id)),
+	update: (id,status) => dispatch(update(id, status)),
 });
 
 // 컴포넌트에 리덕스 스토어를 연동해줄 때에는 connect 함수 사용

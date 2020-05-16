@@ -1,8 +1,7 @@
 import React from 'react';
 
 function TodoList (props) {
-	let { desc, onDelete }  = props;
-	console.log(props);
+	let { id, desc, status, onDelete, onUpdate }  = props;
 	// let i = 0;
 	// let lists = [];
 	// const len = _todoList.length;
@@ -20,21 +19,19 @@ function TodoList (props) {
 	// }
 	return(
 		<li>
-			<em></em>
-			<p
-				onClick={ event => {
-					event.preventDefault();
-				}}
-			>
+			<p onClick={ () => {
+				status = (status === 'active' ? 'complete' : 'active');
+				onUpdate(id, status);
+			}} >
 				{desc}
 			</p>
-			<span onClick={
-				() => {
+			<span onClick={ () => {
 					console.log('delete 클릭');
-					onDelete();
+					onDelete(id);
 				}
-			}
-			>&times;</span>
+			}>
+				&times;
+			</span>
 		</li>
 	)
 }

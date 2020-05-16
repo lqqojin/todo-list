@@ -42,6 +42,7 @@
     list-style: none;
     border-bottom: 2px solid #d9d9d9;
     width: 100%;
+    text-align: center
 }
 .doList li::after {
     clear: both;

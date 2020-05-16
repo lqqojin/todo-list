@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
 
 function AddTodo (props) {
 	console.log('AddTodo >> ', props);
@@ -17,7 +18,7 @@ function AddTodo (props) {
 				placeholder="React-Redux Todolist"
 				maxLength={200}
 				className="todo"
-			/>
+			/>{' '}
 			<button type="submit">
 				Add Todo
 			</button>
