@@ -11,7 +11,6 @@ function App(props) {
 		axios.get('http://localhost:4000')
 			.then(res => {
 				console.log('server get 호출', res.data.data);
-				console.log(useState(res.data.data));
 			});
 	},[]);
   return (
