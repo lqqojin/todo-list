@@ -1,20 +1,20 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import TodoList from '../component/TodoList';
-import { get, create, remove, update } from '../store/modules/todoAction';
+import { create, remove, update } from '../store/modules/todoAction';
 
 function TodoContainer (props) {
 	const { contents, remove, update } = props;
 	console.log('contents >', contents);
 	const handlerDelete = (id) => remove(id);
-	const handlerUpdate = (id, status) => update(id, status)
+	const handlerUpdate = (id, status) => update(id, status);
 	return (
 		<ul className="doList">
 			{
-				contents.map((todo) => {
+				contents.map((todo, index) => {
 					return (
 						<TodoList
-							key={todo.id}
+							key={index}
 							{...todo}
 							onUpdate={handlerUpdate}
 							onDelete={handlerDelete}
@@ -33,7 +33,6 @@ const mapStateToProps = state => ({
 
 // props 로 넣어줄 액션 생성함수
 const mapDispatchToProps = dispatch => ({
-	get: () => dispatch(get()),
 	create: (todo) => dispatch(create(todo)),
 	remove: (id) => dispatch(remove(id)),
 	update: (id,status) => dispatch(update(id, status)),

@@ -19,9 +19,9 @@ function AddTodo (props) {
 				maxLength={200}
 				className="todo"
 			/>{' '}
-			<button type="submit">
+			<Button type="submit">
 				Add Todo
-			</button>
+			</Button>
 		</form>
 	)
 }

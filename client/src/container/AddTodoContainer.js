@@ -4,10 +4,12 @@ import AddTodo from '../component/AddTodo';
 import { create } from '../store/modules/todoAction';
 
 function AddTodoContainer (props) {
-	const handleSubmit = (todo) => {
-		const { create } = props;
-		console.log('handleSubmit > todo >>', todo)
-		create(todo);
+	const { create, max_id } = props;
+	const handleSubmit = async (todo) => {
+		let id = max_id + 1
+		let _todo = Object.assign({id}, todo);
+		console.log('handleSubmit > todo >>', _todo)
+		create(_todo)
 	}
 	return (
 		<AddTodo submit={handleSubmit}/>
@@ -16,7 +18,8 @@ function AddTodoContainer (props) {
 
 // props 로 넣어줄 스토어 상태값
 const mapStateToProps = state => ({
-	// todoList: state.todoAction.todoList
+	todoList: state.todoAction.todoList,
+	max_id: state.todoAction.max_id
 });
 
 // props 로 넣어줄 액션 생성함수

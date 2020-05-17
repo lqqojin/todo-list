@@ -19,12 +19,22 @@ function TodoList (props) {
 	// }
 	return(
 		<li>
-			<p onClick={ () => {
-				status = (status === 'active' ? 'complete' : 'active');
-				onUpdate(id, status);
-			}} >
-				{desc}
-			</p>
+			{
+				status === 'complete' ?
+				<del onClick={() => {
+					status = (status === 'active' ? 'complete' : 'active');
+					onUpdate(id, status);
+				}}>
+					{desc}
+				</del>
+				:
+				<p onClick={() => {
+					status = (status === 'active' ? 'complete' : 'active');
+					onUpdate(id, status);
+				}}>
+					{desc}
+				</p>
+			}
 			<span onClick={ () => {
 					console.log('delete 클릭');
 					onDelete(id);

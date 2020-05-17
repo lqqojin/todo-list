@@ -63,9 +63,16 @@
 }
 .doList li p {
     float: left;
-    width: 84%;
+    width: 95%;
     padding-left: 2%;
     margin: 0;
+}
+.doList li del {
+    float: left;
+    width: 95%;
+    padding-left: 2%;
+    margin: 0;
+    color: red
 }
 .doList li span {
     float: left;
