@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import AddTodo from '../component/AddTodo';
-import { create } from '../store/modules/todoAction';
+// import { create } from '../store/modules/todoAction';
+import { create } from '../action/todoAction';
 
 function AddTodoContainer (props) {
 	const { create, max_id } = props;
+	console.log('max_id')
 	const handleSubmit = async (todo) => {
 		let id = max_id + 1
 		let _todo = Object.assign({id}, todo);
@@ -18,8 +20,8 @@ function AddTodoContainer (props) {
 
 // props 로 넣어줄 스토어 상태값
 const mapStateToProps = state => ({
-	todoList: state.todoAction.todoList,
-	max_id: state.todoAction.max_id
+	todoList: state.todoReducer.todoList,
+	max_id: state.todoReducer.max_id
 });
 
 // props 로 넣어줄 액션 생성함수
