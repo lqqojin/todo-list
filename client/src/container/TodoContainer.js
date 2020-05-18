@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import TodoList from '../component/TodoList';
-import { create, remove, update } from '../store/modules/todoAction';
+// import { create, remove, update } from '../store/modules/todoAction';
+import {  create, remove, update  } from '../action/todoAction';
 
 function TodoContainer (props) {
 	const { contents, remove, update } = props;
@@ -28,7 +29,7 @@ function TodoContainer (props) {
 
 // props 로 넣어줄 스토어 상태값
 const mapStateToProps = state => ({
-	contents: state.todoAction.contents
+	contents: state.todoReducer.contents
 });
 
 // props 로 넣어줄 액션 생성함수

@@ -4,7 +4,8 @@ import Subject from './component/Subject';
 import AddTodoContainer from './container/AddTodoContainer';
 import TodoContainer from './container/TodoContainer';
 import './App.css';
-import {fetch} from "./store/modules/todoAction";
+// import { fetch } from "./store/modules/todoAction";
+import { fetch } from "./action/todoAction";
 
 function App(props) {
 	const { fetch } = props;
@@ -22,8 +23,8 @@ function App(props) {
 }
 // props 로 넣어줄 스토어 상태값
 const mapStateToProps = state => ({
-	contents: state.todoAction.contents
-});
+	contents: state.todoReducer.contents
+})
 
 const mapDispatchToProps = dispatch => ({
 	fetch: () => dispatch(fetch()),

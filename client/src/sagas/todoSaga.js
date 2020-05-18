@@ -1,8 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-// import Api from '...';
-
 import http from '../http';
-import { FETCH, CREATE, UPDATE, DELETE, success } from "../store/modules/todoAction";
+import { FETCH, CREATE, UPDATE, DELETE, success } from '../action/todoAction';
 
 function fetchTodoAPI() {
     console.log('통신 fetchTodoAPI');
