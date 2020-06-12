@@ -1,4 +1,4 @@
-import { CREATE, DELETE, SUCCESS, UPDATE } from "../action/todoAction";
+import { SUCCESS, DB_ERROR } from "../action/todoAction";
 
 const initialState = {
 	max_id: 0,
@@ -10,13 +10,13 @@ const initialState = {
 // 리듀서
 export default function todoReducer(state = initialState, action) {
 	console.log('%cReducer 실행', 'color:purple')
-	console.log('todoAction', { state, action });
+	console.log({ state, action });
 	let newState;
 	let newContents = [];
 
 	switch (action.type) {
 		case SUCCESS:
-			console.log(`%cSUCCESS`, 'color:red');
+			console.log(`%cSUCCESS`, 'color:skyblue');
 			newContents = action.todoList.concat();
 			let maxTodo;
 			if (action && action.todoList && action.todoList.length > 0) {
@@ -27,39 +27,43 @@ export default function todoReducer(state = initialState, action) {
 					return pre;
 				})
 			}
-			console.log('maxTodo > ',maxTodo);
 			newState = Object.assign({}, state, {
 				contents: newContents,
 				max_id: maxTodo.id
 			})
 			break;
-		case CREATE:
-			console.log(`%cCREATE`, 'color:red');
-			newContents = state.contents.concat(action.todo);
-			newState = Object.assign({}, state, {
-				max_id: action.todo.id,
-				contents: newContents
-			});
+		case DB_ERROR:
+			console.log('%cDB_ERROR', 'color:red');
+			console.log(action);
+			newState = state;
 			break;
-		case UPDATE:
-			console.log(`%cUPDATE`, 'color:red');
-			newContents = state.contents.concat();
-			newContents.forEach((item) => {
-				if (item.id === action.id) item.status = action.status;
-			});
-			newState = Object.assign({}, state, {
-				contents: newContents
-			});
-			break;
-		case DELETE:
-			console.log(`%cDELETE`, 'color:red');
-			state.contents.forEach((item) => {
-				if (item.id !== action.id)  newContents.push(item);
-			});
-			newState = Object.assign({}, state, {
-				contents: newContents
-			});
-			break;
+		// case CREATE:
+		// 	console.log(`%cCREATE`, 'color:red');
+		// 	newContents = state.contents.concat(action.todo);
+		// 	newState = Object.assign({}, state, {
+		// 		max_id: action.todo.id,
+		// 		contents: newContents
+		// 	});
+		// 	break;
+		// case UPDATE:
+		// 	console.log(`%cUPDATE`, 'color:red');
+		// 	newContents = state.contents.concat();
+		// 	newContents.forEach((item) => {
+		// 		if (item.id === action.id) item.status = action.status;
+		// 	});
+		// 	newState = Object.assign({}, state, {
+		// 		contents: newContents
+		// 	});
+		// 	break;
+		// case DELETE:
+		// 	console.log(`%cDELETE`, 'color:red');
+		// 	state.contents.forEach((item) => {
+		// 		if (item.id !== action.id)  newContents.push(item);
+		// 	});
+		// 	newState = Object.assign({}, state, {
+		// 		contents: newContents
+		// 	});
+		// 	break;
 		default: return state;
 	}
 	console.log('todoAction result', action.type, action, state, newState);
