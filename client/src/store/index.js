@@ -9,7 +9,10 @@ export default function configureStore() {
 	// saga 미들웨어를 생성합니다.
 	const sagaMiddleware = createSagaMiddleware();
 	// 스토어를 만들기 및 개발자 도구 적용
-	const store = createStore(combineReducers, compose(applyMiddleware(sagaMiddleware),  devTools));
+	let store
+	if (devTools) store = createStore(combineReducers, compose(applyMiddleware(sagaMiddleware),  devTools || null))
+	else store = createStore(combineReducers, compose(applyMiddleware(sagaMiddleware)));
+
 	sagaMiddleware.run(rootSaga);
 	return store;
 }

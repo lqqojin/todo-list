@@ -1,9 +1,9 @@
 // mongo setting
 let mongo = null;
 
-require('mongodb').MongoClient.connect(process.env.MONGO_URL, { useUnifiedTopology: true },(err, mg) => {
+require('mongodb').MongoClient.connect(process.env.MONGO_URL || 'mongodb://127.0.0.1:27017', { useUnifiedTopology: true },(err, mg) => {
 	if (err) { console.error('Fail create mongo', err); return; }
-	mongo = mg.db(process.env.MONGO_DB);
+	mongo = mg.db(process.env.MONGO_DB || 'test');
 	global.mongo = mongo;
 
 	mongo.on('close', (event) => { console.log('mongo close', event); });

@@ -38,7 +38,13 @@ function* createTodo(action) {
     try {
         console.log(action.todo);
         const res = yield call(createTodoAPI, action.todo);
-        console.log(res.data);
+        if (res.data) {
+            console.log(res.data);
+            const fetchRst = yield call(fetchTodoAPI);
+            yield put(success(fetchRst.data.data))
+        } else {
+            // 기타 처리
+        }
     } catch (e) {
         console.error(e);
         // yield put(loginFailureAction(e.message));
@@ -48,7 +54,11 @@ function* updateTodo(action) {
     try {
         console.log(action);
         const res = yield call(updateTodoAPI, action);
-        console.log(res.data);
+        if (res.data) {
+            console.log(res.data);
+            const fetchRst = yield call(fetchTodoAPI);
+            yield put(success(fetchRst.data.data))
+        }
     } catch (e) {
         console.error(e);
         // yield put(loginFailureAction(e.message));
@@ -58,7 +68,11 @@ function* deleteTodo(action) {
     try {
         console.log(action);
         const res = yield call(deleteTodoAPI, action);
-        console.log(res.data);
+        if (res.data) {
+            console.log(res.data);
+            const fetchRst = yield call(fetchTodoAPI);
+            yield put(success(fetchRst.data.data))
+        }
     } catch (e) {
         console.error(e);
         // yield put(loginFailureAction(e.message));
