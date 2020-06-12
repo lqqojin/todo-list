@@ -2,7 +2,6 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 
 function AddTodo (props) {
-	console.log('AddTodo >> ', props);
 	return (
 		<form action="/create_process" method="POST" onSubmit={
 			(event) => {

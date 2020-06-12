@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import http from '../http';
-import { FETCH, CREATE, UPDATE, DELETE, success } from '../action/todoAction';
+import { FETCH, CREATE, UPDATE, DELETE, dbError, success, fetch } from '../action/todoAction';
 
 function fetchTodoAPI() {
     console.log('통신 fetchTodoAPI');
@@ -27,55 +27,40 @@ function* fetchTodoList() {
     try {
         console.log('%cFetchTodoList', 'color:orange');
         const res = yield call(fetchTodoAPI);
-        yield put(success(res.data.data))
-        console.log(res.data.data);
+        if (res.data) yield put(success(res.data.data))
     } catch (e) {
         console.error(e);
-        // yield put(loginFailureAction(e.message));
+        yield put(dbError(e.toString()));
     }
 }
 function* createTodo(action) {
     try {
         console.log(action.todo);
         const res = yield call(createTodoAPI, action.todo);
-        if (res.data) {
-            console.log(res.data);
-            const fetchRst = yield call(fetchTodoAPI);
-            yield put(success(fetchRst.data.data))
-        } else {
-            // 기타 처리
-        }
+        if (res.data) yield put(fetch());
     } catch (e) {
         console.error(e);
-        // yield put(loginFailureAction(e.message));
+        yield put(dbError(e.toString()));
     }
 }
 function* updateTodo(action) {
     try {
         console.log(action);
         const res = yield call(updateTodoAPI, action);
-        if (res.data) {
-            console.log(res.data);
-            const fetchRst = yield call(fetchTodoAPI);
-            yield put(success(fetchRst.data.data))
-        }
+        if (res.data) yield put(fetch());
     } catch (e) {
         console.error(e);
-        // yield put(loginFailureAction(e.message));
+        yield put(dbError(e.toString()));
     }
 }
 function* deleteTodo(action) {
     try {
         console.log(action);
         const res = yield call(deleteTodoAPI, action);
-        if (res.data) {
-            console.log(res.data);
-            const fetchRst = yield call(fetchTodoAPI);
-            yield put(success(fetchRst.data.data))
-        }
+        if (res.data) yield put(fetch());
     } catch (e) {
         console.error(e);
-        // yield put(loginFailureAction(e.message));
+        yield put(dbError(e.toString()));
     }
 }
 export default function* todoWatcher() {
@@ -84,10 +69,3 @@ export default function* todoWatcher() {
     yield takeEvery(UPDATE, updateTodo);
     yield takeEvery(DELETE, deleteTodo);
 }
-
-// export default function* root() {
-//     yield all ([
-//         fork(watchCreate),
-//         fork(watchGet)
-//     ])
-// }

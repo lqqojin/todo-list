@@ -6,11 +6,9 @@ import { create } from '../action/todoAction';
 
 function AddTodoContainer (props) {
 	const { create, max_id } = props;
-	console.log('max_id')
 	const handleSubmit = async (todo) => {
 		let id = max_id + 1
 		let _todo = Object.assign({id}, todo);
-		console.log('handleSubmit > todo >>', _todo)
 		create(_todo)
 	}
 	return (

@@ -1,4 +1,4 @@
-import { SUCCESS } from "../action/todoAction";
+import { SUCCESS, DB_ERROR } from "../action/todoAction";
 
 const initialState = {
 	max_id: 0,
@@ -10,13 +10,13 @@ const initialState = {
 // 리듀서
 export default function todoReducer(state = initialState, action) {
 	console.log('%cReducer 실행', 'color:purple')
-	console.log('todoAction', { state, action });
+	console.log({ state, action });
 	let newState;
 	let newContents = [];
 
 	switch (action.type) {
 		case SUCCESS:
-			console.log(`%cSUCCESS`, 'color:red');
+			console.log(`%cSUCCESS`, 'color:skyblue');
 			newContents = action.todoList.concat();
 			let maxTodo;
 			if (action && action.todoList && action.todoList.length > 0) {
@@ -30,6 +30,11 @@ export default function todoReducer(state = initialState, action) {
 				contents: newContents,
 				max_id: maxTodo.id
 			})
+			break;
+		case DB_ERROR:
+			console.log('%cDB_ERROR', 'color:red');
+			console.log(action);
+			newState = state;
 			break;
 		// case CREATE:
 		// 	console.log(`%cCREATE`, 'color:red');
