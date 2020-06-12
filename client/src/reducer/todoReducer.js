@@ -24,6 +24,7 @@ export default function todoReducer(state = initialState, action) {
 					if(pre && cur && pre.id && cur.id) {
 						return pre.id > cur.id ? pre : cur;
 					}
+					return pre;
 				})
 			}
 			newState = Object.assign({}, state, {

@@ -28,6 +28,7 @@ function* fetchTodoList() {
         console.log('%cFetchTodoList', 'color:orange');
         const res = yield call(fetchTodoAPI);
         if (res.data) yield put(success(res.data.data))
+	      else yield put({type: 'etc'});
     } catch (e) {
         console.error(e);
         yield put(dbError(e.toString()));
